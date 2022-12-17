@@ -12,13 +12,25 @@
 }
 
 .board-cell {
+    background-color: transparent;
+
     width: 50px;
     height: 50px;
-    border: 3px solid #ccc;
+    border: 3px solid #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    padding: 2rem;
 
     cursor: pointer;
+    transition: all 200ms ease;
+}
+
+.board-cell:hover {
+    border: 3px solid #ccc;
+}
+
+.cell-text {
+    transition: all 200ms ease;
 }

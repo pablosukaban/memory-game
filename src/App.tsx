@@ -13,19 +13,36 @@ export const App = () => {
     const [mainArray, setMainArray] = useState<Cell[]>(getRandomArray);
     const [choiscesArray, setChoicesArray] = useState<Cell[]>([]);
 
-    const moveOver = () => {
+    const hideAllCells = () => {
         const allClearArray = mainArray.map((item) => ({
             ...item,
-            isPressed: false,
+            isPressed: item.isCorrect,
         }));
-        setChoicesArray([]);
         setMainArray(allClearArray);
+    };
+
+    const moveOver = () => {
+        hideAllCells();
+
+        if (choiscesArray[0].value === choiscesArray[1].value) {
+            const guessedRightArray = mainArray.map((item) => {
+                if (item.value === choiscesArray[0].value) {
+                    return { ...item, isCorrect: true, isPressed: true };
+                } else {
+                    return item;
+                }
+            });
+            setMainArray(guessedRightArray);
+        }
+
+        setChoicesArray([]);
     };
 
     const handleCellClick = (givenId: string) => {
         const clickedCell = mainArray.find((item) => givenId === item.id);
 
         if (!clickedCell) return;
+        if (choiscesArray.length === 2) return;
         setChoicesArray((prev) => [...prev, clickedCell]);
 
         const clickedArr = mainArray.map((item) => {
@@ -39,7 +56,7 @@ export const App = () => {
 
     useEffect(() => {
         if (choiscesArray.length === 2) {
-            setTimeout(moveOver, 2000);
+            setTimeout(moveOver, 1500);
         }
     }, [choiscesArray]);
 
@@ -47,15 +64,19 @@ export const App = () => {
         <div className='container'>
             <div className='board-grid'>
                 {mainArray.map((item) => (
-                    <div
+                    <button
                         key={item.id}
                         className='board-cell'
                         onClick={() => handleCellClick(item.id)}
+                        disabled={item.isCorrect}
                     >
-                        <span style={{ opacity: item.isPressed ? '1' : '0' }}>
+                        <span
+                            style={{ opacity: item.isPressed ? '1' : '0' }}
+                            className='cell-text'
+                        >
                             {item.value}
                         </span>
-                    </div>
+                    </button>
                 ))}
             </div>
         </div>
