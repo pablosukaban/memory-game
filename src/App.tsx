@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 import './App.css';
 
+// TODO светлая тема, таймер
+
 type Cell = {
     id: string;
     value: string;
@@ -12,6 +14,12 @@ type Cell = {
 export const App = () => {
     const [mainArray, setMainArray] = useState<Cell[]>(getRandomArray);
     const [choiscesArray, setChoicesArray] = useState<Cell[]>([]);
+
+    const isAllCorrect = mainArray.every((item) => item.isCorrect);
+
+    if (isAllCorrect) {
+        console.log('win');
+    }
 
     const hideAllCells = () => {
         const allClearArray = mainArray.map((item) => ({
@@ -54,6 +62,10 @@ export const App = () => {
         setMainArray(clickedArr);
     };
 
+    const handleRestartClick = () => {
+        setMainArray(getRandomArray);
+    };
+
     useEffect(() => {
         if (choiscesArray.length === 2) {
             setTimeout(moveOver, 1500);
@@ -62,6 +74,7 @@ export const App = () => {
 
     return (
         <div className='container'>
+            {isAllCorrect ? <h1 className='board-title'>Победа!</h1> : null}
             <div className='board-grid'>
                 {mainArray.map((item) => (
                     <button
@@ -79,6 +92,11 @@ export const App = () => {
                     </button>
                 ))}
             </div>
+            {isAllCorrect ? (
+                <button onClick={handleRestartClick} className='restart-btn'>
+                    Еще
+                </button>
+            ) : null}
         </div>
     );
 };
@@ -94,5 +112,25 @@ function getRandomArray() {
         };
         return newObj;
     });
-    return arr;
+    return shuffle(arr);
+}
+
+function shuffle(array: Cell[]) {
+    let currentIndex = array.length,
+        randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex],
+            array[currentIndex],
+        ];
+    }
+
+    return array;
 }
