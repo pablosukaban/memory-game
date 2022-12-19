@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from './components/Grid';
 import { ThemeButton } from './components/ThemeButton';
-import { getRandomArray } from './utils';
+import { getCurrentDiff, getRandomArray } from './utils';
 import './App.css';
 
-// TODO таймер, сложность
+// TODO таймер
 
 export type Cell = {
     id: string;
@@ -25,25 +25,7 @@ export const App = () => {
     const [chosenDifficulty, setChosenDifficulty] =
         useState<DifficultyType>('normal');
 
-    const difficultyOptions = {
-        easy: {
-            timeOut: 1500,
-            gridNumber: 12,
-            style: { gridTemplateColumns: 'repeat(4, 1fr)' },
-        },
-        normal: {
-            timeOut: 1000,
-            gridNumber: 16,
-            style: { gridTemplateColumns: 'repeat(4, 1fr)' },
-        },
-        hard: {
-            timeOut: 500,
-            gridNumber: 24,
-            style: { gridTemplateColumns: 'repeat(4, 1fr)' },
-        },
-    };
-
-    const currentDifficulty = difficultyOptions[chosenDifficulty];
+    const currentDifficulty = getCurrentDiff(chosenDifficulty);
 
     const handleChangeDifficulty = (data: DifficultyType) => {
         setChosenDifficulty(data);
@@ -84,6 +66,7 @@ export const App = () => {
     const handleCellClick = (givenId: string) => {
         const clickedCell = mainArray.find((item) => givenId === item.id);
 
+        if (choiscesArray[0] && givenId === choiscesArray[0].id) return;
         if (!clickedCell) return;
         if (choiscesArray.length === 2) return;
 
@@ -119,10 +102,10 @@ export const App = () => {
                 <ThemeButton />
                 <Grid
                     handleCellClick={handleCellClick}
-                    mainArray={mainArray}
                     handleRestartClick={handleRestartClick}
                     handleChangeDifficulty={handleChangeDifficulty}
                     gridStyle={currentDifficulty.style}
+                    mainArray={mainArray}
                 />
             </div>
         </div>
