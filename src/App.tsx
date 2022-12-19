@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
 import './App.css';
+import { Grid } from './Grid';
+import { getRandomArray } from './utils';
 
 // TODO светлая тема, таймер
 
-type Cell = {
+export type Cell = {
     id: string;
     value: string;
     isPressed: boolean;
@@ -15,8 +16,6 @@ export const App = () => {
     const [mainArray, setMainArray] = useState<Cell[]>(getRandomArray);
     const [choiscesArray, setChoicesArray] = useState<Cell[]>([]);
     const [isLightTheme, setIsLightTheme] = useState(false);
-
-    const isAllCorrect = mainArray.every((item) => item.isCorrect);
 
     const hideAllCells = () => {
         const allClearArray = mainArray.map((item) => ({
@@ -130,58 +129,11 @@ export const App = () => {
                     </svg>
                 )}
             </button>
-            <h1 className='board-title'>{isAllCorrect ? 'Победа!' : ''}</h1>
-            <div className='board-grid'>
-                {mainArray.map((item) => (
-                    <button
-                        key={item.id}
-                        className='board-cell'
-                        onClick={() => handleCellClick(item.id)}
-                        disabled={item.isCorrect}
-                    >
-                        <span
-                            style={{ opacity: item.isPressed ? '1' : '0' }}
-                            className='cell-text'
-                        >
-                            {item.value}
-                        </span>
-                    </button>
-                ))}
-            </div>
-            <button onClick={handleRestartClick} className='restart-btn'>
-                {isAllCorrect ? 'Еще раз' : ''}
-            </button>
+            <Grid
+                handleCellClick={handleCellClick}
+                mainArray={mainArray}
+                handleRestartClick={handleRestartClick}
+            />
         </div>
     );
 };
-
-function getRandomArray() {
-    const allChoices = '1122334455667788';
-    const arr = allChoices.split('').map((item) => {
-        const newObj: Cell = {
-            id: nanoid(),
-            value: item,
-            isPressed: false,
-            isCorrect: false,
-        };
-        return newObj;
-    });
-    return shuffle(arr);
-}
-
-function shuffle(array: Cell[]) {
-    let currentIndex = array.length,
-        randomIndex;
-
-    while (currentIndex != 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex],
-            array[currentIndex],
-        ];
-    }
-
-    return array;
-}
