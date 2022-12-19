@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Grid } from './Grid';
-import { ThemeButton } from './ThemeButton';
+import { Grid } from './components/Grid';
+import { ThemeButton } from './components/ThemeButton';
 import { getRandomArray } from './utils';
 
 // TODO таймер, сложность
