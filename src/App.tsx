@@ -3,7 +3,7 @@ import './App.css';
 import { Grid } from './Grid';
 import { getRandomArray } from './utils';
 
-// TODO светлая тема, таймер
+// TODO таймер, сложность
 
 export type Cell = {
     id: string;
