@@ -59,8 +59,8 @@ body {
 .board-cell {
     background-color: transparent;
 
-    width: 50px;
-    height: 50px;
+    width: 5rem;
+    height: 5rem;
     border: 3px solid var(--clr-border);
     display: flex;
     justify-content: center;
@@ -97,8 +97,9 @@ body {
 }
 
 .difficulty-container {
+    width: 100%;
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
 }
 
 .difficulty-btn {

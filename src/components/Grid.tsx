@@ -27,21 +27,21 @@ export const Grid: React.FC<GridProps> = ({
                     className='difficulty-btn'
                     onClick={() => handleChangeDifficulty('easy')}
                 >
-                    Easy
+                    Легкий
                 </button>
                 <button
                     id='normal'
                     className='difficulty-btn difficulty-btn-active'
                     onClick={() => handleChangeDifficulty('normal')}
                 >
-                    Normal
+                    Нормальный
                 </button>
                 <button
                     id='hard'
                     className='difficulty-btn'
                     onClick={() => handleChangeDifficulty('hard')}
                 >
-                    Hard
+                    Тяжелый
                 </button>
             </div>
             <div className='board-grid' style={gridStyle}>
