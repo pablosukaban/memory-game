@@ -1,5 +1,26 @@
 import { nanoid } from 'nanoid';
-import { Cell } from './App';
+import { Cell, DifficultyType } from './App';
+
+export function getCurrentDiff(data: DifficultyType) {
+    const difficultyOptions = {
+        easy: {
+            timeOut: 1500,
+            gridNumber: 12,
+            style: { gridTemplateColumns: 'repeat(4, 1fr)' },
+        },
+        normal: {
+            timeOut: 1000,
+            gridNumber: 16,
+            style: { gridTemplateColumns: 'repeat(4, 1fr)' },
+        },
+        hard: {
+            timeOut: 500,
+            gridNumber: 24,
+            style: { gridTemplateColumns: 'repeat(4, 1fr)' },
+        },
+    };
+    return difficultyOptions[data];
+}
 
 export function getRandomArray(arrayLength = 16) {
     // 12 16 36
