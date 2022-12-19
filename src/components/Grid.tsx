@@ -1,22 +1,47 @@
 import React from 'react';
-import { Cell } from '../App';
+import { Cell, DifficultyType } from '../App';
 
 type GridProps = {
     mainArray: Cell[];
     handleRestartClick: () => void;
     handleCellClick: (itemId: string) => void;
+    handleChangeDifficulty: (data: DifficultyType) => void;
 };
 
 export const Grid: React.FC<GridProps> = ({
     mainArray,
     handleCellClick,
     handleRestartClick,
+    handleChangeDifficulty,
 }) => {
     const isAllCorrect = mainArray.every((item) => item.isCorrect);
 
     return (
         <>
             <h1 className='board-title'>{isAllCorrect ? 'Победа!' : ''}</h1>
+            <div className='difficulty-container'>
+                <button
+                    id='easy'
+                    className='difficulty-btn'
+                    onClick={() => handleChangeDifficulty('easy')}
+                >
+                    Easy
+                </button>
+                <button
+                    id='normal'
+                    className='difficulty-btn difficulty-btn-active'
+                    onClick={() => handleChangeDifficulty('normal')}
+                >
+                    Normal
+                </button>
+                <button
+                    id='hard'
+                    className='difficulty-btn'
+                    onClick={() => handleChangeDifficulty('hard')}
+                >
+                    Hard
+                </button>
+            </div>
             <div className='board-grid'>
                 {mainArray.map((item) => (
                     <button

@@ -3,6 +3,22 @@ import { Cell } from './App';
 
 export function getRandomArray() {
     const allChoices = '1122334455667788';
+
+    const obj = '';
+
+    // switch (arrayLength) {
+    //     case 9:
+    //         obj = '1122334455667788'
+    //         break;
+    //     case 16:
+    //         break;
+    //     case 26:
+    //         break;
+
+    //     default:
+    //         break;
+    // }
+
     const arr = allChoices.split('').map((item) => {
         const newObj: Cell = {
             id: nanoid(),

@@ -2,6 +2,7 @@
     --clr-text: #ccc;
     --clr-text-hover: #eee;
     --clr-border: #333;
+    --clr-border-active: #8f8f8f;
     --clr-border-hover: #ccc;
     --clr-border-disabled: #747474;
 }
@@ -65,12 +66,11 @@ body {
 }
 
 .board-cell:hover {
-    border: 3px solid var(--clr-border-hover);
+    border-color: var(--clr-border-hover);
 }
 
 .board-cell:disabled {
     pointer-events: none;
-    /* border: 3px solid var(--clr-border-disabled); */
 }
 
 .cell-text {
@@ -87,4 +87,27 @@ body {
 
 .restart-btn:hover {
     color: var(--clr-text-hover);
+}
+
+.difficulty-container {
+    display: flex;
+    gap: 10px;
+}
+
+.difficulty-btn {
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 2px solid var(--clr-border);
+    border-radius: 7px;
+    cursor: pointer;
+
+    transition: all 200ms ease;
+}
+
+.difficulty-btn-active {
+    border-color: var(--clr-border-active);
+}
+
+.difficulty-btn:hover {
+    border-color: var(--clr-border-hover);
 }
