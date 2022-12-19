@@ -1,25 +1,43 @@
 import { nanoid } from 'nanoid';
 import { Cell } from './App';
 
-export function getRandomArray() {
-    const allChoices = '1122334455667788';
+export function getRandomArray(arrayLength = 16) {
+    // 12 16 36
 
-    const obj = '';
+    let obj = '';
 
     // switch (arrayLength) {
-    //     case 9:
-    //         obj = '1122334455667788'
+    //     case 12:
+    //         obj = '1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8';
     //         break;
     //     case 16:
+    //         obj = '1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12';
     //         break;
-    //     case 26:
+    //     case 24:
+    //         obj =
+    //             '1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16';
     //         break;
 
     //     default:
     //         break;
     // }
 
-    const arr = allChoices.split('').map((item) => {
+    switch (arrayLength) {
+        case 12:
+            obj = '1,1,2,2,3,3,4,4,5,5,6,6';
+            break;
+        case 16:
+            obj = '1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8';
+            break;
+        case 24:
+            obj = '1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12';
+            break;
+
+        default:
+            break;
+    }
+
+    const arr = obj.split(',').map((item) => {
         const newObj: Cell = {
             id: nanoid(),
             value: item,

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Cell, DifficultyType } from '../App';
+import { Cell, DifficultyType, StyleType } from '../App';
 
 type GridProps = {
     mainArray: Cell[];
+    gridStyle: StyleType;
     handleRestartClick: () => void;
     handleCellClick: (itemId: string) => void;
     handleChangeDifficulty: (data: DifficultyType) => void;
@@ -10,6 +11,7 @@ type GridProps = {
 
 export const Grid: React.FC<GridProps> = ({
     mainArray,
+    gridStyle,
     handleCellClick,
     handleRestartClick,
     handleChangeDifficulty,
@@ -42,7 +44,7 @@ export const Grid: React.FC<GridProps> = ({
                     Hard
                 </button>
             </div>
-            <div className='board-grid'>
+            <div className='board-grid' style={gridStyle}>
                 {mainArray.map((item) => (
                     <button
                         key={item.id}

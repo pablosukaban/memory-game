@@ -15,21 +15,38 @@ export type Cell = {
 
 export type DifficultyType = 'easy' | 'normal' | 'hard';
 
+export type StyleType = {
+    gridTemplateColumns: string;
+};
+
 export const App = () => {
     const [mainArray, setMainArray] = useState<Cell[]>(getRandomArray);
     const [choiscesArray, setChoicesArray] = useState<Cell[]>([]);
-    const [currentDifficulty, setCurrentDifficulty] =
+    const [chosenDifficulty, setChosenDifficulty] =
         useState<DifficultyType>('normal');
 
     const difficultyOptions = {
-        easy: { timeOut: 2000, gridNumber: 16 },
-        normal: { timeOut: 1000, gridNumber: 16 },
-        hard: { timeOut: 500, gridNumber: 25 },
+        easy: {
+            timeOut: 1500,
+            gridNumber: 12,
+            style: { gridTemplateColumns: 'repeat(4, 1fr)' },
+        },
+        normal: {
+            timeOut: 1000,
+            gridNumber: 16,
+            style: { gridTemplateColumns: 'repeat(4, 1fr)' },
+        },
+        hard: {
+            timeOut: 500,
+            gridNumber: 24,
+            style: { gridTemplateColumns: 'repeat(4, 1fr)' },
+        },
     };
 
+    const currentDifficulty = difficultyOptions[chosenDifficulty];
+
     const handleChangeDifficulty = (data: DifficultyType) => {
-        setCurrentDifficulty(data);
-        handleRestartClick();
+        setChosenDifficulty(data);
 
         const btns = document.querySelectorAll('.difficulty-btn');
         const clickedBtn = document.getElementById(data) as HTMLButtonElement;
@@ -83,24 +100,31 @@ export const App = () => {
     };
 
     const handleRestartClick = () => {
-        setMainArray(getRandomArray);
+        setMainArray(() => getRandomArray(currentDifficulty.gridNumber));
     };
 
     useEffect(() => {
         if (choiscesArray.length === 2) {
-            setTimeout(moveOver, difficultyOptions[currentDifficulty].timeOut);
+            setTimeout(moveOver, currentDifficulty.timeOut);
         }
     }, [choiscesArray]);
 
+    useEffect(() => {
+        handleRestartClick();
+    }, [chosenDifficulty]);
+
     return (
-        <div className='container'>
-            <ThemeButton />
-            <Grid
-                handleCellClick={handleCellClick}
-                mainArray={mainArray}
-                handleRestartClick={handleRestartClick}
-                handleChangeDifficulty={handleChangeDifficulty}
-            />
+        <div className='wrapper'>
+            <div className='container'>
+                <ThemeButton />
+                <Grid
+                    handleCellClick={handleCellClick}
+                    mainArray={mainArray}
+                    handleRestartClick={handleRestartClick}
+                    handleChangeDifficulty={handleChangeDifficulty}
+                    gridStyle={currentDifficulty.style}
+                />
+            </div>
         </div>
     );
 };
